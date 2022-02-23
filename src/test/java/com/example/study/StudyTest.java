@@ -1,10 +1,13 @@
 package com.example.study;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 class StudyTest {
 
@@ -74,6 +77,71 @@ class StudyTest {
             new Study(10);
             Thread.sleep(300);
         });
+    }
+
+    @Test
+    @DisplayName("assumeTrue")
+    void create_new_study_8(){
+
+        String test_env = System.getenv("TEST_ENV");
+        System.out.println(test_env);
+        assumeTrue("LOCAL".equalsIgnoreCase(test_env));
+
+        Study study = new Study(10);
+    }
+
+    @Test
+    @DisplayName("assumingThat")
+    void create_new_study_9(){
+
+        String test_env = System.getenv("TEST_ENV");
+        System.out.println(test_env);
+        assumingThat("LOCAL".equalsIgnoreCase(test_env), () -> {
+            System.out.println("LOCAL입니다.");
+        });
+
+        assumingThat("STG".equalsIgnoreCase(test_env), () -> {
+            System.out.println("STG입니다.");
+        });
+
+    }
+
+    @Test
+    @DisplayName("EnabledOnOs, DisabledOnOs")
+    @EnabledOnOs(value = {OS.MAC, OS.LINUX, OS.WINDOWS})
+    void create_new_study_10(){
+
+        System.out.println("MAC과 LINUX에서만 동작한다. DisabledOnOs를 사용하면 반대로 동작");
+
+    }
+
+    @Test
+    @DisplayName("EnabledOnJre, DisabledOnJre")
+    @EnabledOnJre({JRE.JAVA_8, JRE.JAVA_9, JRE.JAVA_10, JRE.JAVA_11})
+    void create_new_study_11(){
+
+        System.out.println("java 버전이 8,9,10,11일 경우만 실행");
+
+    }
+
+    @Test
+    @DisplayName("EnabledIfEnvironmentVariable, DisabledIfEnvironmentVariable")
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
+    void create_new_study_12(){
+
+        System.out.println("환경변수중 TEST_ENV가 LOCAL이 아닐경우 실행 안함");
+
+    }
+
+    @Test
+    @DisplayName("tag 지정")
+    @Tag("fast")
+    void create_new_study_13(){
+
+        // 원하는 tag만 실행하는 법은 실행환경의 구성편집에 가서 기본 클래스로 선택된것을 태그로 변경하고 원하는 태그명으로 변경해준다.
+        // 아니면 pom.xml에 profiles를 설정하여 원하는 태그만 실행하게 할 수 있다.
+        System.out.println("tag를 지정하여 그룹화를 할 수 있다.");
+
     }
 
     @BeforeAll
