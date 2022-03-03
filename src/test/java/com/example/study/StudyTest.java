@@ -2,9 +2,20 @@ package com.example.study;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.AggregateWith;
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
+import org.junit.jupiter.params.converter.ArgumentConversionException;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.converter.SimpleArgumentConverter;
+import org.junit.jupiter.params.provider.*;
 
 import java.time.Duration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
@@ -144,6 +155,73 @@ class StudyTest {
 
     }
 
+    @FastTest
+    @DisplayName("커스텀 태그")
+    void create_new_study_14(){
+
+        // 원하는 tag만 실행하는 법은 실행환경의 구성편집에 가서 기본 클래스로 선택된것을 태그로 변경하고 원하는 태그명으로 변경해준다.
+        // 아니면 pom.xml에 profiles를 설정하여 원하는 태그만 실행하게 할 수 있다.
+        System.out.println("tag를 지정하여 그룹화를 할 수 있다.");
+
+    }
+
+    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}" )
+    @DisplayName("테스트 반복하기(반복횟수만큼)")
+    void create_new_study_15(RepetitionInfo repetitionInfo){
+
+        System.out.println("test" + repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
+
+    }
+
+    @DisplayName("테스트 반복하기(파라메터값만큼))")
+    @ParameterizedTest(name = "{index} {displayName} message={0}")
+    @ValueSource(strings = {"날씨가", "많이", "추워지고", "있네요."})
+    void create_new_study_16(String message){
+        System.out.println(message);
+    }
+
+    @DisplayName("테스트 반복하기(파라메터값만큼))")
+    @ParameterizedTest(name = "{index} {displayName} message={0}")
+    @ValueSource(ints = {10, 20, 40})
+    @EmptySource
+    @NullSource
+    @NullAndEmptySource
+    void create_new_study_17(int limit){
+        // @EmptySource 빈값 추가
+        // @NullSource null 값 추가
+        // @NullAndEmptySource 위에 둘다
+        System.out.println(limit);
+    }
+
+    @DisplayName("테스트 반복하기(파라메터값만큼))")
+    @ParameterizedTest(name = "{index} {displayName} message={0}")
+    @CsvSource({"10, '자바 스터디'", "20, 스프링"})
+    void create_new_study_18(@AggregateWith(StudyAggregator.class) Study study){
+        System.out.println(study);
+    }
+
+    // Argument는 인자값 1개에 대한 변환을 제공한다.
+    // static으로 만들어줘야한다.
+    static class StudyConverter extends SimpleArgumentConverter {
+
+
+        @Override
+        protected Object convert(Object o, Class<?> aClass) throws ArgumentConversionException {
+            assertEquals(Study.class, aClass, "Can only convert to Study");
+            return new Study(Integer.parseInt(o.toString()));
+        }
+    }
+
+    // 인자값이 여러개일 경우 변환을 제공한다.
+    // static으로 만들어줘야한다.
+    static class StudyAggregator implements ArgumentsAggregator{
+
+        @Override
+        public Object aggregateArguments(ArgumentsAccessor argumentsAccessor, ParameterContext parameterContext) throws ArgumentsAggregationException {
+            return new Study(argumentsAccessor.getInteger(0), argumentsAccessor.getString(1));
+        }
+    }
+
     @BeforeAll
     static void beforeAll(){
         System.out.println("beforeAll");
@@ -161,6 +239,7 @@ class StudyTest {
 
     @AfterEach
     void afterEach(){
+
         System.out.println("afterEach");
     }
 }
