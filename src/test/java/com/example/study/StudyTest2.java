@@ -67,7 +67,17 @@ class StudyTest2 {
         // @TestMethodOrder랑 @TestInstance(TestInstance.Lifecycle.PER_CLASS) 랑 상관없다.
         // 다만 같이 쓰면 상태정보도 공유하니깐 용도에 맞게 써야한다.
         System.out.println(this);
-        System.out.println(value);
+        System.out.println(value++);
+    }
+
+    @DisplayName("동작안함")
+    @Test
+    @Disabled
+    void create_new_study_23(){
+        // @TestMethodOrder랑 @TestInstance(TestInstance.Lifecycle.PER_CLASS) 랑 상관없다.
+        // 다만 같이 쓰면 상태정보도 공유하니깐 용도에 맞게 써야한다.
+        System.out.println(this);
+        System.out.println(value++);
     }
 
     @BeforeAll
