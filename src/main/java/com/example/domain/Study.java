@@ -1,15 +1,14 @@
 package com.example.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-@Entity
 @Getter
 @Setter
 public class Study {
@@ -24,6 +23,7 @@ public class Study {
     private String name;
     private LocalDateTime openedDateTime;
     private Long ownerId;
+    private Member owner;
 
     public Study()
     {
@@ -56,6 +56,10 @@ public class Study {
         return name;
     }
 
+    public void setOwner(Member member){
+        this.owner = member;
+    }
+
     @Override
     public String toString() {
         return "Study{" +
@@ -63,5 +67,11 @@ public class Study {
                 ", limit=" + limit +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public void open() {
+        this.openedDateTime = LocalDateTime.now();
+        this.studyStatus = StudyStatus.OPENED;
+
     }
 }
