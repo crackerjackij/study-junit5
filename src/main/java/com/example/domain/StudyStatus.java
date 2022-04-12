@@ -1,4 +1,4 @@
-package com.example.study;
+package com.example.domain;
 
 public enum StudyStatus {
     DRAFT, STARTED, ENDED

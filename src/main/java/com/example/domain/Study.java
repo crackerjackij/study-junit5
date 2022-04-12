@@ -1,12 +1,29 @@
-package com.example.study;
+package com.example.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@Setter
 public class Study {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     StudyStatus studyStatus = StudyStatus.DRAFT;
 
     private int limit;
 
     private String name;
+    private LocalDateTime openedDateTime;
+    private Long ownerId;
 
     public Study()
     {
