@@ -142,7 +142,7 @@ class StudyServiceTest {
         studyService.createNewStudy(1L, study);
 
         // Then
-        assertEquals(member, study.getOwner());
+        // assertEquals(member, study.getOwner());
         // verify(memberService, times(1)).notify(member);
         then(memberService).should(times(1)).notify(study);
         // verifyNoMoreInteractions(memberService);
@@ -169,7 +169,7 @@ class StudyServiceTest {
         //assertEquals(studyRepository.save(study), study);
 
         studyService.createNewStudy(1L, study);
-        assertEquals(member, study.getOwner());
+        //assertEquals(member, study.getOwner());
 
 
     }
