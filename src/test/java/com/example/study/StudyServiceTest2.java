@@ -1,11 +1,9 @@
 package com.example.study;
 
-import com.example.domain.Member;
 import com.example.domain.Study;
 import com.example.domain.StudyStatus;
 import com.example.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,19 +19,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.io.File;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 @SpringBootTest
@@ -94,7 +86,7 @@ class StudyServiceTest2 {
 
         // Then
         // TODO study의 status가 OPENED로 변경됐는지 확인
-        assertEquals(StudyStatus.OPENED, study.getStudyStatus());
+        assertEquals(StudyStatus.OPENED, study.getStatus());
         // TODO study의 openedDataTime이 null이 아닌지 확인
         assertNotNull(study.getOpenedDateTime());
         // TODO memberService의 notify(study)가 호출 됐는지 확인.

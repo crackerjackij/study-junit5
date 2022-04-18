@@ -58,7 +58,7 @@ class StudyServiceTest3 {
 
         // Then
         // TODO study의 status가 OPENED로 변경됐는지 확인
-        assertEquals(StudyStatus.OPENED, study.getStudyStatus());
+        assertEquals(StudyStatus.OPENED, study.getStatus());
         // TODO study의 openedDataTime이 null이 아닌지 확인
         assertNotNull(study.getOpenedDateTime());
         // TODO memberService의 notify(study)가 호출 됐는지 확인.

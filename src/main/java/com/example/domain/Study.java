@@ -8,13 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Study {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private StudyStatus status = StudyStatus.DRAFT;
     private int limitCount;
@@ -40,7 +42,4 @@ public class Study {
 
     }
 
-    public StudyStatus getStudyStatus() {
-        return this.status;
-    }
 }

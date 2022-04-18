@@ -9,15 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -189,7 +182,7 @@ class StudyServiceTest {
 
         // Then
         // TODO study의 status가 OPENED로 변경됐는지 확인
-        assertEquals(StudyStatus.OPENED, study.getStudyStatus());
+        assertEquals(StudyStatus.OPENED, study.getStatus());
         // TODO study의 openedDataTime이 null이 아닌지 확인
         assertNotNull(study.getOpenedDateTime());
         // TODO memberService의 notify(study)가 호출 됐는지 확인.
